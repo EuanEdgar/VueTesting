@@ -19,6 +19,12 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/runtime": "^7.9.2"
+    "@babel/runtime": "^7.9.2",
+    "css-loader": "^4.2.1",
+    "html-loader": "^1.2.1",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11"
   }
 }
