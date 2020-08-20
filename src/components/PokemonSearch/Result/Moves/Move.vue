@@ -1,9 +1,12 @@
 <template>
   <div v-if="!blank(moveDetails)">
-    <b-card>
-      <p>ID: {{ moveDetails.id }}</p>
-      <p>Name: {{ moveDetails.names.find(({ language }) => language.name === 'en').name }}</p>
+    <b-card
+      :title="`${moveDetails.names.find(({ language }) => language.name === 'en').name} #${moveDetails.id}`"
+    >
       <p>Type: {{ titleize(moveDetails.type.name) }}</p>
+      <p>Power: {{ moveDetails.power }}</p>
+      <p>Accuracy: {{ moveDetails.accuracy }}%</p>
+      <p>{{ moveDetails.effect_entries.slice(-1)[0].effect }}</p>
     </b-card>
   </div>
 </template>

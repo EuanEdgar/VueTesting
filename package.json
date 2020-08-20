@@ -25,6 +25,7 @@
     "css-loader": "^4.2.1",
     "html-loader": "^1.2.1",
     "mini-css-extract-plugin": "^0.10.0",
+    "spiceutils": "git+ssh://git@github.com/stylefoundry/SpiceUtils#ee_cache_returns_promise.build",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.3",
     "vue-style-loader": "^4.1.2",
