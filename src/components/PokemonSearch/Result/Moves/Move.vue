@@ -6,7 +6,7 @@
       <p>Type: {{ titleize(moveDetails.type.name) }}</p>
       <p>Power: {{ moveDetails.power }}</p>
       <p>Accuracy: {{ moveDetails.accuracy }}%</p>
-      <p>{{ moveDetails.effect_entries.slice(-1)[0].effect }}</p>
+      <p>{{ parseMoveEffect(moveDetails.effect_entries.slice(-1)[0].effect) }}</p>
     </b-card>
   </div>
 </template>
@@ -31,7 +31,14 @@ export default {
   },
   methods: {
     blank,
-    titleize
+    titleize,
+    parseMoveEffect(effectText){
+      let text = effectText
+      ;['effect_chance'].forEach((property) => {
+        text = text.replace(`$${property}`, this.moveDetails[property])
+      })
+      return text
+    }
   }
 }
 </script>
