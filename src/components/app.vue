@@ -1,21 +1,13 @@
 <template>
-  <div>
-    <HelloWorld :target="target" />
-    <input v-model="target" />
-  </div>
+  <PokemonSearch />
 </template>
 
 <script>
-import HelloWorld from 'components/hello_world'
+import PokemonSearch from 'components/PokemonSearch'
 
 export default {
-  data() {
-    return {
-      target: 'world',
-    }
-  },
   components: {
-    HelloWorld,
+    PokemonSearch,
   }
 }
 </script>

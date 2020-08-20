@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
@@ -26,7 +27,10 @@ module.exports = {
         options: {
           loaders: {
             css: ['vue-style-loader', {
-              loader: 'css-loader',
+              loader: [
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+              ],
             }],
             js: [
               'babel-loader',
@@ -35,6 +39,14 @@ module.exports = {
           cacheBusting: true,
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
+      }
     ]
   },
   resolve: {
@@ -51,6 +63,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/template.html')
     }),
+    new MiniCssExtractPlugin(),
     new VueLoaderPlugin(),
   ],
   devtool: 'source-map',
