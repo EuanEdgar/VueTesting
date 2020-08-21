@@ -25,7 +25,11 @@ export default {
   watch: {
     async searchTerm() {
       const pokemon = await api.getPokemon(this.searchTerm)
-      this.pokemon = [pokemon]
+      const species = await api.getURL(pokemon.species.url)
+      this.pokemon = [{
+        ...pokemon,
+        species,
+      }]
     }
   },
   components: {

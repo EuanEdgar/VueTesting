@@ -1,6 +1,9 @@
 <template>
   <div>
-    <input v-model="internalValue" />
+    <input
+      v-model="internalValue"
+      v-on:keypress.enter.prevent="submit"
+    />
     <button
       type="button"
       v-on:click="submit"

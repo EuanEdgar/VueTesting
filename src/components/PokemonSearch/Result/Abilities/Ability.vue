@@ -4,7 +4,7 @@
     :title="abilityDetails.names.find(({ language }) => language.name === 'en').name"
   >
     <p>Slot: {{ abilityDetails.is_hidden ? 'Hidden' : abilityDetails.slot }}</p>
-    <p>{{ abilityDetails.effect_entries.slice(-1)[0].effect }}</p>
+    <p>{{ abilityDetails.effect_entries.find(({ language }) => language.name === 'en').effect }}</p>
   </b-card>
 </div>
 </template>
