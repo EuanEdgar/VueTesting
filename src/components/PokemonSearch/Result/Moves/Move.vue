@@ -15,6 +15,7 @@
           <p v-if="move.learn_method.name === 'level-up'">Learned at level {{move.level_learned_at}}</p>
           <p v-if="!blank(move.power)">Power: {{ move.power }}</p>
           <p v-if="!blank(move.accuracy)">Accuracy: {{ move.accuracy }}%</p>
+          <p v-if="!blank(move.pp)">PP: {{ move.pp }}</p>
           <VueMarkdown>{{ parseMoveEffect(move.effect_entries.find(({ language }) => language.name === 'en').effect) }}</VueMarkdown>
         </b-col>
       </b-row>
