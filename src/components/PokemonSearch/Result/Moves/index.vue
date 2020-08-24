@@ -1,16 +1,22 @@
 <template>
   <div>
-    <h3>Levelup Moves</h3>
-    <div v-for="move in groupedMoves['level-up']" v-bind:key="move.id">
-      <Move v-bind:move="move" />
+    <div v-if="groupedMoves['level-up']">
+      <h3>Levelup Moves</h3>
+      <div v-for="move in groupedMoves['level-up']" v-bind:key="move.id">
+        <Move v-bind:move="move" />
+      </div>
     </div>
-    <h3>Egg moves</h3>
-    <div v-for="move in groupedMoves['egg']" v-bind:key="move.id">
-      <Move v-bind:move="move" />
+    <div v-if="groupedMoves['egg']">
+      <h3>Egg moves</h3>
+      <div v-for="move in groupedMoves['egg']" v-bind:key="move.id">
+        <Move v-bind:move="move" />
+      </div>
     </div>
-    <h3>TM/HM</h3>
-    <div v-for="move in groupedMoves['machine']" v-bind:key="move.id">
-      <Move v-bind:move="move" />
+    <div v-if="groupedMoves['machine']">
+      <h3>TM/HM</h3>
+      <div v-for="move in groupedMoves['machine']" v-bind:key="move.id">
+        <Move v-bind:move="move" />
+      </div>
     </div>
   </div>
 </template>

@@ -28,8 +28,16 @@
     </b-row>
     <b-row>
       <b-col>
-        <Abilities :pokemon="pokemon" />
-        <Moves :moves="pokemon.moves" />
+        <CollapsibleContainer
+          title="Abilities"
+        >
+          <Abilities :pokemon="pokemon" />
+        </CollapsibleContainer>
+        <CollapsibleContainer
+          title="Moves"
+        >
+          <Moves :moves="pokemon.moves" />
+        </CollapsibleContainer>
       </b-col>
     </b-row>
   </b-container>
@@ -37,6 +45,7 @@
 
 <script>
 import { blank, dig, titleize } from 'spiceutils'
+import CollapsibleContainer from 'components/CollapsibleContainer'
 import TypeDisplay from '../TypeDisplay'
 import Abilities from './Abilities'
 import Moves from './Moves'
@@ -50,6 +59,7 @@ export default {
   },
   components: {
     Abilities,
+    CollapsibleContainer,
     Moves,
     TypeDisplay
   }
