@@ -1,29 +1,37 @@
 <template>
   <div>
-    <div v-if="groupedMoves['level-up']">
-      <h3>Levelup Moves</h3>
-      <div v-for="move in groupedMoves['level-up']" v-bind:key="move.id">
-        <Move v-bind:move="move" />
+    <FadeIn>
+      <div v-if="!blank(groupedMoves['level-up'])">
+        <h3>Levelup Moves</h3>
+        <div v-for="move in groupedMoves['level-up']" v-bind:key="move.id">
+          <Move v-bind:move="move" />
+        </div>
       </div>
-    </div>
-    <div v-if="groupedMoves['egg']">
-      <h3>Egg moves</h3>
-      <div v-for="move in groupedMoves['egg']" v-bind:key="move.id">
-        <Move v-bind:move="move" />
+    </FadeIn>
+    <FadeIn>
+      <div v-if="!blank(groupedMoves['egg'])">
+        <h3>Egg moves</h3>
+        <div v-for="move in groupedMoves['egg']" v-bind:key="move.id">
+          <Move v-bind:move="move" />
+        </div>
       </div>
-    </div>
-    <div v-if="groupedMoves['machine']">
-      <h3>TM/HM</h3>
-      <div v-for="move in groupedMoves['machine']" v-bind:key="move.id">
-        <Move v-bind:move="move" />
+    </FadeIn>
+    <FadeIn>
+      <div v-if="!blank(groupedMoves['machine'])">
+        <h3>TM/HM</h3>
+        <div v-for="move in groupedMoves['machine']" v-bind:key="move.id">
+          <Move v-bind:move="move" />
+        </div>
       </div>
-    </div>
+    </FadeIn>
   </div>
 </template>
 
 <script>
-import { groupBy } from 'spiceutils'
+import { blank, groupBy } from 'spiceutils'
 import * as api from 'api'
+
+import FadeIn from 'components/transitions/FadeIn'
 
 import Move from './Move'
 
@@ -51,8 +59,12 @@ export default {
 
     this.groupedMoves['level-up'].sort(({level_learned_at: a}, {level_learned_at: b}) => a - b)
   },
+  methods: {
+    blank,
+  },
   components: {
-    Move
-  }
+    FadeIn,
+    Move,
+  },
 }
 </script>

@@ -1,60 +1,33 @@
 <template>
-  <div :style="wrapperStyle" class="outerWrapper">
-    <div ref="labelRef" v-on:click="toggle">
-      <a>
-        {{ title }}
-      </a>
-    </div>
-    <div class="container" ref="containerRef">
-      <slot />
-    </div>
+  <div>
+    <h1
+      v-on:click="toggle"
+    >
+      {{ title }}
+    </h1>
+    <FadeIn>
+      <slot v-if="!collapsed" />
+    </FadeIn>
   </div>
 </template>
 
 <script>
-import { dig } from 'spiceutils'
+import FadeIn from 'components/transitions/FadeIn'
 
 export default {
-  props: ['title', 'initialCollapse'],
-  data() {
+  props: ['title'],
+  data(){
     return {
-      collapsed: this.initialCollapse || true,
-      labelHeight: 0,
-      containerHeight: 0,
+      collapsed: this.initialCollapsed || true,
     }
-  },
-  computed: {
-    wrapperStyle() {
-      const style = {}
-      if(this.collapsed){
-        style.height =  `${this.labelHeight}px`
-      } else {
-        style.height =  `${this.containerHeight + this.labelHeight}px`
-      }
-      return style
-    },
-  },
-  mounted(){
-    this.computeHeights()
-  },
-  updated(){
-    this.computeHeights()
   },
   methods: {
     toggle(){
       this.collapsed = !this.collapsed
     },
-    computeHeights(){
-      this.labelHeight = this.$refs.labelRef.clientHeight
-      this.containerHeight = this.$refs.containerRef.clientHeight
-    },
+  },
+  components: {
+    FadeIn,
   },
 }
 </script>
-
-<style lang="scss" scoped>
-  div.outerWrapper {
-    overflow: hidden;
-    transition: height 0.1s ease-in;
-  }
-</style>
