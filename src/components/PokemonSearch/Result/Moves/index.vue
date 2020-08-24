@@ -29,7 +29,6 @@
 
 <script>
 import { blank, groupBy } from 'spiceutils'
-import * as api from 'api'
 
 import FadeIn from 'components/transitions/FadeIn'
 
@@ -42,22 +41,15 @@ export default {
       groupedMoves: {}
     }
   },
-  async created(){
-    const moveDetails = await Promise.all(this.moves.map(({ move }) => api.getURL(move.url)))
-    const movesWithDetails = moveDetails.map((details, index) => {
-      const move = this.moves[index]
-      const versionDetails = move.version_group_details.slice(-1)[0]
+  created(){
+    const { moves } = this
 
-      return {
-        ...details,
-        level_learned_at: versionDetails.level_learned_at,
-        learn_method: versionDetails.move_learn_method,
-      }
+    this.groupedMoves = groupBy(moves, ({ version_group_details: versionDetails }) => {
+      const details = versionDetails.slice(-1)[0]
+      return details.move_learn_method.name
     })
 
-    this.groupedMoves = groupBy(movesWithDetails, ['learn_method', 'name'])
-
-    this.groupedMoves['level-up'].sort(({level_learned_at: a}, {level_learned_at: b}) => a - b)
+    this.groupedMoves['level-up'].sort(({version_group_details: { move_learn_level: a }}, {version_group_details: { move_learn_level: b }}) => a - b)
   },
   methods: {
     blank,

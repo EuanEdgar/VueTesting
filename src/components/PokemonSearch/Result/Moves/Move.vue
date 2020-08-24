@@ -1,26 +1,28 @@
 <template>
-  <b-card v-if="!blank(move)">
-    <b-container>
-      <b-row>
-        <b-col cols="8">
-          <h2>{{ move.names.find(({ language }) => language.name === 'en').name }}</h2>
-        </b-col>
-        <b-col class="text-right">
-          <h3>#{{ move.id }}</h3>
-          <TypeDisplay :type="move.type.name" />
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-          <p v-if="move.learn_method.name === 'level-up'">Learned at level {{move.level_learned_at}}</p>
-          <p v-if="!blank(move.power)">Power: {{ move.power }}</p>
-          <p v-if="!blank(move.accuracy)">Accuracy: {{ move.accuracy }}%</p>
-          <p v-if="!blank(move.pp)">PP: {{ move.pp }}</p>
-          <VueMarkdown>{{ parseMoveEffect(move.effect_entries.find(({ language }) => language.name === 'en').effect) }}</VueMarkdown>
-        </b-col>
-      </b-row>
-    </b-container>
-  </b-card>
+  <FadeIn>
+    <b-card v-if="!blank(moveDetails)">
+      <b-container>
+        <b-row>
+          <b-col cols="8">
+            <h2>{{ moveDetails.names.find(({ language }) => language.name === 'en').name }}</h2>
+          </b-col>
+          <b-col class="text-right">
+            <h3>#{{ moveDetails.id }}</h3>
+            <TypeDisplay :type="moveDetails.type.name" />
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <p v-if="moveDetails.move_learn_method.name === 'level-up'">Learned at level {{moveDetails.level_learned_at}}</p>
+            <p v-if="!blank(moveDetails.power)">Power: {{ moveDetails.power }}</p>
+            <p v-if="!blank(moveDetails.accuracy)">Accuracy: {{ moveDetails.accuracy }}%</p>
+            <p v-if="!blank(moveDetails.pp)">PP: {{ moveDetails.pp }}</p>
+            <VueMarkdown>{{ parseMoveEffect(moveDetails.effect_entries.find(({ language }) => language.name === 'en').effect) }}</VueMarkdown>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-card>
+  </FadeIn>
 </template>
 
 <script>
@@ -28,22 +30,41 @@ import { blank, titleize } from 'spiceutils'
 import VueMarkdown from 'vue-markdown'
 import * as api from 'api'
 
+import FadeIn from 'components/transitions/FadeIn'
 import TypeDisplay from '../../TypeDisplay'
 
 export default {
   props: ['move'],
+  data() {
+    return {
+      moveDetails: null,
+    }
+  },
+  async created() {
+    const { move } = this
+
+    const details = await api.getURL(move.move.url)
+
+    const versionDetails = move.version_group_details.slice(-1)[0]
+
+    this.moveDetails = {
+      ...details,
+      ...versionDetails,
+    }
+  },
   methods: {
     blank,
     titleize,
     parseMoveEffect(effectText){
       let text = effectText
       ;['effect_chance'].forEach((property) => {
-        text = text.replace(`$${property}`, this.move[property])
+        text = text.replace(`$${property}`, this.moveDetails[property])
       })
       return text
     },
   },
   components: {
+    FadeIn,
     TypeDisplay,
     VueMarkdown,
   },
