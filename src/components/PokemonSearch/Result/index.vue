@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col cols="10">
+      <b-col cols="8">
         <h1>{{ titleize(pokemon.name) }}</h1>
       </b-col>
       <b-col>
