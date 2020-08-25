@@ -9,16 +9,12 @@
 </template>
 
 <script>
+import { routes } from 'router'
+
 export default {
   data() {
     return {
-      items: [{
-        path: '/hello',
-        label: 'Hello, world!',
-      }, {
-        path: '/pokedex',
-        label: 'Pokedex',
-      }]
+      items: routes,
     }
   }
 }
