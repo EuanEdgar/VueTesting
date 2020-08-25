@@ -6,17 +6,16 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col v-if="history.length" cols="4">
+      <b-col v-if="pokemon.length" cols="4">
         <History
-          :items="history"
+          :items="pokemon"
           @click="historySelect"
         />
       </b-col>
       <b-col>
         <Result
-          v-for="pokemon in pokemon"
-          v-bind:key="pokemon.id"
-          v-bind:pokemon="pokemon"
+          v-if="pokemon.length"
+          :pokemon="pokemon.slice(-1)[0]"
         />
       </b-col>
     </b-row>
@@ -35,17 +34,15 @@ export default {
     return {
       searchTerm: '',
       pokemon: [],
-      history: [],
     }
   },
   methods: {
     historySelect(pokemonID){
-      const index = this.history.findIndex(({ id }) => id === pokemonID)
+      const index = this.pokemon.findIndex(({ id }) => id === pokemonID)
       if(index >= 0){
-        const pokemon = this.history[index]
-        this.history.splice(index, 1)
-        this.history.push(pokemon)
-        this.pokemon = [pokemon]
+        const pokemon = this.pokemon[index]
+        this.pokemon.splice(index, 1)
+        this.pokemon.push(pokemon)
       }
     },
   },
@@ -59,12 +56,11 @@ export default {
         species,
       }
 
-      const existingIndex = this.history.findIndex(({ id }) => id === item.id)
+      const existingIndex = this.pokemon.findIndex(({ id }) => id === item.id)
       if(existingIndex >= 0){
-        this.history.splice(existingIndex, 1)
+        this.pokemon.splice(existingIndex, 1)
       }
-      this.history.push(item)
-      this.pokemon = [item]
+      this.pokemon.push(item)
     }
   },
   components: {

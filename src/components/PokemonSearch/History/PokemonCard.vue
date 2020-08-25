@@ -1,7 +1,7 @@
 <template>
   <div @click="$emit('click', pokemon.id)">
+    <img :src="pokemon.sprites.front_default" />
     <span>#{{ pokemon.id }}: {{ titleize(pokemon.name) }}</span>
-    <img class="text-right" :src="pokemon.sprites.front_default" />
   </div>
 </template>
 
@@ -18,10 +18,14 @@ export default {
 
 <style scoped lang="scss">
   div {
+    cursor: pointer;
+    user-select: none;
     min-height: 48px;
+    margin-bottom: 5px;
+
     img {
-      max-height: 100%;
-      right: 0;
+      height: 96px;
+      width: 96px;
     }
   }
 </style>

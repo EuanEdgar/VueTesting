@@ -1,16 +1,21 @@
 <template>
-  <transition-group
+  <transition
     name="expand"
     @enter="enter"
     @after-enter="afterEnter"
     @leave="leave"
+    :style="{transitionDelay}"
   >
     <slot/>
-  </transition-group>
+  </transition>
 </template>
 
 <script>
 export default {
+  props: ['delay'],
+  data() {
+    return { transitionDelay: `${this.delay || 0}s` }
+  },
   methods: {
     enter(element) {
       const width = getComputedStyle(element).width;
@@ -63,7 +68,7 @@ export default {
 <style scoped>
   .expand-enter-active,
   .expand-leave-active {
-    transition: height 12s ease-in-out;
+    transition: height 1s ease-in-out;
     overflow: hidden;
   }
 

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <ul v-for="item in items" :key="item.id">
-      <li>
+    <b-list-group>
+      <b-list-group-item v-for="item in historyItems" :key="item.id">
         <PokemonCard
           :pokemon="item"
           @click="$emit('click', $event)"
         />
-      </li>
-    </ul>
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
@@ -16,6 +16,11 @@ import PokemonCard from './PokemonCard'
 
 export default {
   props: ['items'],
+  computed: {
+    historyItems(){
+      return [...this.items].reverse()
+    },
+  },
   components: {
     PokemonCard,
   },
@@ -23,4 +28,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// ul {
+//   list-style-type: none;
+//   padding: 0 5px;
+// }
 </style>
