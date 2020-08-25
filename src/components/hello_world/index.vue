@@ -1,11 +1,14 @@
 <template>
   <div>
-    Hello, {{ target || 'world' }}!
+    <p>Hello, {{ target || 'world' }}!</p>
+    <input v-model="target" />
   </div>
 </template>
 
 <script>
 export default {
-  props: ['target']
+  data() {
+    return { target: '' }
+  }
 }
 </script>
